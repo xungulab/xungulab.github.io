@@ -1,0 +1,159 @@
+<html>
+
+<body bgColor=#c0c0c0>
+<pre>
+<font size="3">
+
+<font size="5"><b>Mgenome 1.0</b> </font>
+
+This program is designed to find the optimal trees for multiple genome 
+rearrangement by signed reversals. The problem is modeled as: For a given
+collection of genomes represented by signed permutations on genes, find a 
+tree to connect the given genomes by reversal paths such that the number 
+of all signed reversals is minimized.
+
+<b>Definition</b> A genome is represented by a signed permutation:
+
+      P=p<sub>1</sub> p<sub>2</sub> ... p<sub>n</sub>
+
+where each p<sub>i</sub> stands for a gene located in a DNA. The sign (+/-) of pi
+denotes the strand of p<sub>i</sub> , i.e., "+" indicates that p<sub>i</sub> is in the forward
+strand of the DNA and "-" means that p<sub>i</sub> is in the forward strand of the 
+DNA.
+
+<b>Example</b>   Genome P= 1 2 -3 4 -5  in a DNA
+
+<img src="per.bmp" legnth=300 width=650>
+
+
+<b>Definition</b> A reversal is defined as an operation that transfers p into p(i,j)
+
+          p = p<sub>1</sub> p<sub>2</sub> ... p<sub>i-1</sub> p<sub>i+1</sub> p<sub>i+2</sub> ... p<sub>j</sub> p<sub>j+1</sub> ... p<sub>n</sub>
+
+     p(i,j) = p<sub>1</sub> p<sub>2</sub> ... p<sub>i-1</sub> - p<sub>j</sub> - p<sub>j-1</sub> ... - p<sub>i</sub> p<sub>j+1</sub> ... p<sub>n</sub>
+
+The segment [i,j] of p changes its both orientation and signs.
+
+<b>Example</b>  The following signed reversal transfers   P<sub>1</sub> = 2 -3 4 -5  into 
+           P<sub>2</sub> =  1 -4 3 -2 -5:
+
+<img src="rev.bmp" legnth=300 width=650>
+
+
+<b>Multiple Genome Rearrangement By Signed Reversal</b> 
+
+Let g<sub>1</sub>,g<sub>2</sub>, ..., g<sub>m</sub> be a collection of genomes represented by signed permutations 
+on genes. Find an optimal tree that connects the given genomes by reversal paths 
+such that the number of all signed reversals is minimized.
+
+<b>Mgenome 1.0</b> is designed to find such an optimal tree for the given genomes.
+
+The program accepts its input data stored in a file "nodes.dat", which is in 
+FASTA format for all genomes.
+
+<b>Example</b>  
+
+>Human
+4  5  1  6  9  8  -2  3  -7  10  
+>Sea urchin
+-2  -3  4  7  5  1  10  -8  6  9  
+>Fruit fly
+-3  4  5  7  1  10  2  8  -9  6  
+
+Then the program find the optimal tree:
+
+>a[0]: Human
+4  5  1  6  9  8  -2  3  -7  10
+
+>a[1]: Sea urchin
+-2  -3  4  7  5  1  10  -8  6  9
+
+>a[2]: Fruit fly
+-3  4  5  7  1  10  2  8  -9  6
+
+Distances:
+
+   d[0,1]: 8
+   d[0,2]: 8
+   d[1,2]: 8
+
+Internal node(s):
+
+>s[1]:
+-10  -1  -5  -7  -4  3  2  -8  -9  -6
+
+  Reversal proccess:
+
+a[0] - s[1]:
+
+          4 5 1 6 9 8 -2 3 -7 10
+
+R[ 1, 1]: -4 5 1 6 9 8 -2 3 -7 10
+
+R[10, 1]: -10 7 -3 2 -8 -9 -6 -1 -5 4
+
+R[ 3, 3]: -10 7 3 2 -8 -9 -6 -1 -5 4
+
+R[ 9, 3]: -10 7 5 1 6 9 8 -2 -3 4
+
+R[ 4, 2]: -10 -1 -5 -7 6 9 8 -2 -3 4
+
+R[10, 5]: -10 -1 -5 -7 -4 3 2 -8 -9 -6
+
+Reversal distance = 6
+
+s[1] - a[1]:
+
+          -10 -1 -5 -7 -4 3 2 -8 -9 -6
+
+R[ 7, 1]: -2 -3 4 7 5 1 10 -8 -9 -6
+
+R[10, 9]: -2 -3 4 7 5 1 10 -8 6 9
+
+Reversal distance = 2
+
+s[1] - a[2]:
+
+          -10 -1 -5 -7 -4 3 2 -8 -9 -6
+
+R[ 6, 1]: -3 4 7 5 1 10 2 -8 -9 -6
+
+R[ 3, 3]: -3 4 -7 5 1 10 2 -8 -9 -6
+
+R[ 4, 3]: -3 4 -5 7 1 10 2 -8 -9 -6
+
+R[ 3, 3]: -3 4 5 7 1 10 2 -8 -9 -6
+
+R[ 8, 8]: -3 4 5 7 1 10 2 8 -9 -6
+
+R[10,10]: -3 4 5 7 1 10 2 8 -9 6
+
+Reversal distance = 6
+
+
+Total reversal distance = 14
+
+     <img src="tree1.bmp" legnth=350 width=350>
+
+     <img src="tree2.bmp" legnth=350 width=350>
+
+<b>Web-based Program</b> The program is also designed as a web-based one and 
+can be run on-line:
+
+    http://xgu.zool.iastate.edu
+
+<b>References</b>
+
+The program is implemented from the algorithms in the following papers:
+
+1. S. Wu and X. Gu, Multiple genome rearrangement by reversals,  Pacific 
+   Symposium on Biocomputing 7(2002)259-270.
+
+2. S. Wu and X. Gu, Algorithms for multiple genome rearrangement by signed 
+   reversals,  Pacific Symposium on Biocomputing, 8(2003), 363-374. 
+
+
+</font>
+
+</body>
+</html>
